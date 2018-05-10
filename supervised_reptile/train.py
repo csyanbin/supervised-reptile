@@ -39,7 +39,7 @@ def train(sess,
     """
     if not os.path.exists(save_dir):
         os.mkdir(save_dir)
-    saver = tf.train.Saver()
+    saver = tf.train.Saver(max_to_keep=50)
     reptile = reptile_fn(sess,
                          transductive=transductive,
                          pre_step_op=weight_decay(weight_decay_rate))
@@ -71,7 +71,7 @@ def train(sess,
                 writer.flush()
                 accuracies.append(correct / num_classes)
             log_fn('batch %d: train=%f test=%f' % (i, accuracies[0], accuracies[1]))
-        if i % 100 == 0 or i == meta_iters-1:
+        if i % 1000 == 0 or i == meta_iters-1:
             saver.save(sess, os.path.join(save_dir, 'model.ckpt'), global_step=i)
         if time_deadline is not None and time.time() > time_deadline:
             break

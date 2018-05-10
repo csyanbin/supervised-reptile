@@ -62,7 +62,8 @@ class Reptile:
         old_vars = self._model_state.export_variables()
         new_vars = []
         for _ in range(meta_batch_size):
-            mini_dataset = _sample_mini_dataset(dataset, num_classes, num_shots)
+            # mini_dataset = _sample_mini_dataset(dataset, num_classes, num_shots)
+            mini_dataset = dataset.sample(num_classes, num_shots)
             for batch in _mini_batches(mini_dataset, inner_batch_size, inner_iters, replacement):
                 inputs, labels = zip(*batch)
                 if self._pre_step_op:
@@ -109,8 +110,10 @@ class Reptile:
           The number of correctly predicted samples.
             This always ranges from 0 to num_classes.
         """
+        #train_set, test_set = _split_train_test(
+        #    _sample_mini_dataset(dataset, num_classes, num_shots+1))
         train_set, test_set = _split_train_test(
-            _sample_mini_dataset(dataset, num_classes, num_shots+1))
+            dataset.sample(num_classes, num_shots+1))
         old_vars = self._full_state.export_variables()
         for batch in _mini_batches(train_set, inner_batch_size, inner_iters, replacement):
             inputs, labels = zip(*batch)
@@ -180,7 +183,8 @@ class FOML(Reptile):
         old_vars = self._model_state.export_variables()
         updates = []
         for _ in range(meta_batch_size):
-            mini_dataset = _sample_mini_dataset(dataset, num_classes, num_shots)
+            # mini_dataset = _sample_mini_dataset(dataset, num_classes, num_shots)
+            mini_dataset = dataset.sample(num_classes, num_shots+1)
             mini_batches = self._mini_batches(mini_dataset, inner_batch_size, inner_iters,
                                               replacement)
             for batch in mini_batches:
