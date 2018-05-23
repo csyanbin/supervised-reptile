@@ -1,0 +1,7 @@
+CUDA_VISIBLE_DEVICES=0 python3 -u run_tieredimagenet_pkl.py --shots 1 --learning-rate 0.001 --inner-batch 10 --inner-iters 8 --train-shots 15 --meta-step 1 --meta-step-final 0 --meta-iters 100000 --meta-batch 5 --eval-batch 5 --eval-iters 50 --checkpoint ckpt_t15t --transductive
+
+CUDA_VISIBLE_DEVICES=1 python3 -u run_tieredimagenet_pkl.py --shots 5 --learning-rate 0.001 --inner-batch 10 --inner-iters 8 --train-shots 15 --meta-step 1 --meta-step-final 0 --meta-iters 100000 --meta-batch 5 --eval-batch 15 --eval-iters 50 --checkpoint ckpt_t55t --transductive
+
+CUDA_VISIBLE_DEVICES=2 python3 -u run_tieredimagenet_pkl.py --shots 1 --learning-rate 0.001 --inner-batch 10 --inner-iters 8 --train-shots 15 --meta-step 1 --meta-step-final 0 --meta-iters 100000 --meta-batch 5 --eval-batch 5 --eval-iters 50 --checkpoint ckpt_t15
+
+CUDA_VISIBLE_DEVICES=3 python3 -u run_tieredimagenet_pkl.py --shots 5 --learning-rate 0.001 --inner-batch 10 --inner-iters 8 --train-shots 15 --meta-step 1 --meta-step-final 0 --meta-iters 100000 --meta-batch 5 --eval-batch 15 --eval-iters 50 --checkpoint ckpt_t55
