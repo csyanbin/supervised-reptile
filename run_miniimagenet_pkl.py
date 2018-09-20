@@ -48,7 +48,13 @@ def main():
             train(sess, model, train_set, test_set, args.checkpoint, **train_kwargs(args))
         else:
             print('Restoring from checkpoint...')
-            tf.train.Saver().restore(sess, tf.train.latest_checkpoint(args.checkpoint))
+            try:
+                print(tf.train.latest_checkpoint(args.checkpoint))
+                tf.train.Saver().restore(sess, tf.train.latest_checkpoint(args.checkpoint))
+            except:
+                print(args.checkpoint)
+                tf.train.Saver().restore(sess, args.checkpoint)
+
 
         print('Evaluating...')
         eval_kwargs = evaluate_kwargs(args)
